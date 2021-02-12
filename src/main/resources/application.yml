@@ -1,0 +1,60 @@
+spring:
+    application:
+        name: cont-tool-infasamento
+    jpa:
+       properties:
+          hibernate:
+             show_sql: true
+       database-platform: org.hibernate.dialect.H2Dialect
+       hibernate.ddl-auto: none
+    h2.console:
+       settings:
+          trace: false
+          web-allow-others: false
+       enabled: true
+       path: /h2
+
+# logging configuration
+logging:
+  config: 'classpath:logback.xml'
+        
+
+server:
+  name: cont-tool-infasamento
+  port: 8080 
+
+# management port
+management:
+  server:
+    address: 0.0.0.0
+    port: 8080
+    
+infasamento:
+    call-property:
+        connectionTimeout: 7000
+        socketTimeout: 7000
+        endpoints:
+            svil:
+                mock: false
+                host: 'rest-cont-online-services.app.ocp.svil.poste/api/v1/accountPPayRecharge'
+                useSsl: true
+                trustStorePath: 'classpath:certificati/cert-contab-svil.p12'
+                trustStorePassword: 'sf_cont'
+            coll:
+                mock: false
+                host: 'rest-cont-online-services.app.ocp.test.poste/api/v1/accountPPayRecharge'
+                useSsl: true
+                trust-store-path: 'classpath:certificati/cert-contab-coll.p12'
+                trust-store-password: 'sf_cont'
+            cert:
+                mock: false
+                host: 'rest-cont-online-services.app.cert.ocpto.local/api/v1/accountPPayRecharge'
+                useSsl: false
+                trust-store-path: ''
+                trust-store-password: ''
+            prod:
+                mock: false
+                host: 'rest-cont-online-services.app.prod2.ocprm.local/api/v1/accountPPayRecharge'
+                useSsl: true
+                trust-store-path: 'classpath:certificati/cert-contab-prod2.p12'
+                trust-store-password: 'sf_cont'
